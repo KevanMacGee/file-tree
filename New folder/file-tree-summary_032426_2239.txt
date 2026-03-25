@@ -1,0 +1,202 @@
+This file is a merged representation of a subset of the codebase, containing files not matching ignore patterns, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of a subset of the repository's contents that is considered the most important context.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching these patterns are excluded: .env, *.log
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.cursorindexingignore
+.gitignore
+gtree.py
+readme.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".cursorindexingignore">
+# Don't index SpecStory auto-save files, but allow explicit context inclusion via @ references
+.specstory/**
+</file>
+
+<file path="gtree.py">
+import os
+import sys
+import argparse
+import pyperclip
+from pathspec import PathSpec
+from pathspec.patterns import GitWildMatchPattern
+
+def get_gitignore_spec(folder):
+    gitignore_path = os.path.join(folder, '.gitignore')
+    if os.path.exists(gitignore_path):
+        with open(gitignore_path, 'r') as f:
+            return PathSpec.from_lines(GitWildMatchPattern, f)
+    return None
+
+def build_tree_string(dir_path, prefix="", spec=None, root_dir=None, show_all=False):
+    output = ""
+    if root_dir is None:
+        root_dir = os.path.abspath(dir_path)
+        output += f"{root_dir}\n"
+
+    try:
+        items = os.listdir(dir_path)
+        valid_items = []
+        for i in items:
+            if i.startswith('$'): continue
+            if i == '.git' and not show_all: continue
+            valid_items.append(i)
+        valid_items.sort()
+    except PermissionError:
+        return ""
+
+    filtered_items = []
+    for item in valid_items:
+        full_path = os.path.join(dir_path, item)
+        rel_path = os.path.relpath(full_path, root_dir)
+        match_path = rel_path + '/' if os.path.isdir(full_path) else rel_path
+        
+        if spec and spec.match_file(match_path):
+            continue
+        filtered_items.append(item)
+
+    for i, item in enumerate(filtered_items):
+        is_last = (i == len(filtered_items) - 1)
+        connector = "└── " if is_last else "├── "
+        output += f"{prefix}{connector}{item}\n"
+        
+        full_path = os.path.join(dir_path, item)
+        if os.path.isdir(full_path):
+            new_prefix = prefix + ("    " if is_last else "│   ")
+            output += build_tree_string(full_path, new_prefix, spec, root_dir, show_all)
+    
+    return output
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="A git-aware directory tree generator.")
+    parser.add_argument("path", nargs="?", default=".", help="Target directory")
+    parser.add_argument("-a", "--all", action="store_true", help="Include .git folder")
+    parser.add_argument("--no-ignore", action="store_true", help="Do not respect .gitignore rules")
+    parser.add_argument("-nc", "--no-copy", action="store_true", help="Do not copy output to clipboard")
+    
+    args = parser.parse_args()
+    gitignore_spec = None if args.no_ignore else get_gitignore_spec(args.path)
+    
+    tree_output = build_tree_string(args.path, spec=gitignore_spec, show_all=args.all)
+    
+    print(tree_output)
+    
+    if not args.no_copy and tree_output:
+        pyperclip.copy(tree_output)
+        print("\n[Success: Tree structure copied to clipboard]")
+</file>
+
+<file path="readme.md">
+# gtree.py
+
+A lightweight, Python-based terminal utility that generates a visual directory tree structure while intelligently respecting your project's `.gitignore` rules.
+
+## Features
+
+- **Git-Aware:** Automatically detects and parses your `.gitignore` file.
+- **Auto-Copy:** Automatically copies the generated tree to your clipboard for easy pasting into docs or LLM prompts.
+- **Clean Output:** Uses standard ASCII characters to draw the tree structure.
+- **Customizable:** Options to reveal hidden git metadata or bypass ignore rules.
+
+## Prerequisites
+
+You will need the `pathspec` and `pyperclip` libraries installed:
+
+PowerShell
+
+```
+pip install pathspec pyperclip
+```
+
+## Usage
+
+Run the script using Python. By default, it processes the current directory:
+
+PowerShell
+
+```
+# View the current directory (and copy to clipboard)
+python "C:\Users\User\Development\file-tree\gtree.py"
+
+# View a specific directory
+python "C:\Users\User\Development\file-tree\gtree.py" C:\Path\To\Project
+```
+
+### Command Line Flags
+
+| **Flag**           | **Description**                                              |
+| ------------------ | ------------------------------------------------------------ |
+| `-a`, `--all`      | Includes the `.git` folder in the output (hidden by default). |
+| `--no-ignore`      | Shows every file and folder, bypassing `.gitignore` logic.   |
+| `-nc`, `--no-copy` | Run the command without copying the output to the clipboard. |
+| `-h`, `--help`     | Shows the help menu with all available options.              |
+
+## Setting Up Global Access (Recommended)
+
+To run `gtree` from any folder without typing the full path, add it to your PowerShell Profile:
+
+1. Open your profile in Notepad: `notepad $PROFILE`
+
+2. Add the following function to the file:
+
+   PowerShell
+
+   ```
+   function gtree {
+       python "C:\Users\User\Development\file-tree\gtree.py" $args
+   }
+   ```
+
+3. Save, close, and restart PowerShell.
+
+4. You can now simply type `gtree`, `gtree -a`, or `gtree --no-ignore` anywhere.
+</file>
+
+<file path=".gitignore">
+.specstory/
+.vscode/
+</file>
+
+</files>
