@@ -15,17 +15,18 @@ def get_gitignore_spec(folder):
 
 
 def is_os_hidden(filepath):
-    name = os.path.basename(filepath)
-    if name.startswith('.'):
-        return True
     if sys.platform == 'win32':
+        # On Windows, "hidden" means the FILE_ATTRIBUTE_HIDDEN bit — not dotfile prefix.
+        # Dotfiles are ordinary files on Windows and should be visible by default.
         try:
             import ctypes
             attrs = ctypes.windll.kernel32.GetFileAttributesW(filepath)
             return attrs != -1 and bool(attrs & 2)  # FILE_ATTRIBUTE_HIDDEN
         except Exception:
-            pass
-    return False
+            return False
+    else:
+        # On Unix, dotfiles are hidden by OS convention.
+        return os.path.basename(filepath).startswith('.')
 
 
 def build_tree_string(dir_path, prefix="", spec=None, root_dir=None, show_all=False, show_git=False):
@@ -46,9 +47,13 @@ def build_tree_string(dir_path, prefix="", spec=None, root_dir=None, show_all=Fa
             continue
         full = os.path.join(dir_path, name)
         if not show_all:
-            if name == '.git' and not show_git:
-                continue
-            if is_os_hidden(full):
+            if name == '.git':
+                # .git is always hidden unless --show-git or -a.
+                # Checked before is_os_hidden because Git for Windows marks .git
+                # as FILE_ATTRIBUTE_HIDDEN, which would hide it even with --show-git.
+                if not show_git:
+                    continue
+            elif is_os_hidden(full):
                 continue
         visible.append(name)
     visible.sort()
