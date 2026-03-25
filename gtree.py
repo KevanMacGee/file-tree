@@ -75,7 +75,7 @@ def build_tree_string(dir_path, prefix="", spec=None, root_dir=None, show_all=Fa
         if os.path.isdir(full):
             subtree = build_tree_string(full, new_prefix, spec, root_dir, show_all)
             if subtree:
-                lines.append(f"{prefix}{connector}{name}\n{subtree}")
+                lines.append(f"{prefix}{connector}{name}/\n{subtree}")
         else:
             lines.append(f"{prefix}{connector}{name}\n")
 
