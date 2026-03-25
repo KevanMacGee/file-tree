@@ -29,7 +29,7 @@ def is_os_hidden(filepath):
         return os.path.basename(filepath).startswith('.')
 
 
-def build_tree_string(dir_path, prefix="", spec=None, root_dir=None, show_all=False, show_git=False):
+def build_tree_string(dir_path, prefix="", spec=None, root_dir=None, show_all=False):
     if root_dir is None:
         root_dir = os.path.abspath(dir_path)
         header = f"{root_dir}\n"
@@ -47,13 +47,7 @@ def build_tree_string(dir_path, prefix="", spec=None, root_dir=None, show_all=Fa
             continue
         full = os.path.join(dir_path, name)
         if not show_all:
-            if name == '.git':
-                # .git is always hidden unless --show-git or -a.
-                # Checked before is_os_hidden because Git for Windows marks .git
-                # as FILE_ATTRIBUTE_HIDDEN, which would hide it even with --show-git.
-                if not show_git:
-                    continue
-            elif is_os_hidden(full):
+            if is_os_hidden(full):
                 continue
         visible.append(name)
     visible.sort()
@@ -79,7 +73,7 @@ def build_tree_string(dir_path, prefix="", spec=None, root_dir=None, show_all=Fa
         new_prefix = prefix + ("    " if is_last else "│   ")
 
         if os.path.isdir(full):
-            subtree = build_tree_string(full, new_prefix, spec, root_dir, show_all, show_git)
+            subtree = build_tree_string(full, new_prefix, spec, root_dir, show_all)
             if subtree:
                 lines.append(f"{prefix}{connector}{name}\n{subtree}")
         else:
@@ -98,8 +92,6 @@ if __name__ == "__main__":
                         help="Show absolutely everything, including hidden and gitignore-excluded files")
     parser.add_argument("-ng", "--no-gitignore", dest="no_gitignore", action="store_true",
                         help="Ignore .gitignore rules (hidden files are still excluded)")
-    parser.add_argument("--show-git", dest="show_git", action="store_true",
-                        help="Include .git directory without enabling full --all mode")
     parser.add_argument("-nc", "--no-copy", dest="no_copy", action="store_true",
                         help="Do not copy output to clipboard")
 
@@ -114,7 +106,6 @@ if __name__ == "__main__":
         args.path,
         spec=gitignore_spec,
         show_all=args.show_all,
-        show_git=args.show_git,
     )
 
     print(tree_output)
