@@ -5,9 +5,10 @@ A lightweight, Python-based terminal utility that generates a visual directory t
 ## Features
 
 - **Git-Aware:** Automatically detects and parses your `.gitignore` file.
+
 - **Auto-Copy:** Automatically copies the generated tree to your clipboard for easy pasting into docs or LLM prompts.
-- **Clean Output:** Uses standard ASCII characters to draw the tree structure.
-- **Customizable:** Options to reveal hidden git metadata or bypass ignore rules.
+
+  **Customizable:** Options to reveal hidden git metadata or bypass ignore rules.
 
 ## Prerequisites
 
@@ -21,7 +22,9 @@ pip install pathspec pyperclip
 
 ## Usage
 
-Run the script using Python. By default, it processes the current directory:
+If you just want to run this as a one off or don't plan on using it frequently, you can just run it like a normal Python command line app. However, if you are going to use it frequently, it's recommended that you use the global access instructions below this explanation.
+
+Run the script using Python. By default, it processes the current directory. For the below examples, pretend we are using a computer where the user name is John who has the program in jis desktop folder for some reason. You'll substitute your own.
 
 You can just copy the .py file to the directory you want, open your terminal and run
 
@@ -33,10 +36,10 @@ python gtree.py
 
 ```
 # View the current directory (and copy to clipboard)
-python "C:\Users\User\Development\file-tree\gtree.py"
+python "C:\Users\John\Desktop"
 
 # View a specific directory
-python "C:\Users\User\Development\file-tree\gtree.py" C:\Path\To\Project
+python "C:\Users\John\Desktop\gtree.py" C:\Path\To\Project
 ```
 
 ### Command Line Flags
