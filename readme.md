@@ -1,6 +1,6 @@
 # gtree.py
 
-A lightweight, Python-based terminal utility that generates a visual directory tree while respecting `.gitignore` rules and OS-level hidden file conventions.
+A lightweight, Python-based terminal utility that generates a visual directory tree while respecting `.gitignore` rules and OS-level hidden file conventions. It also gives you the choice to not respect those conventions.
 
 ## Features
 
@@ -71,7 +71,7 @@ To run `gtree` from any folder without typing the full path, add it to your Powe
 
    ```powershell
    function gtree {
-       python "C:\path\to\gtree.py" $args
+       python "C:\Users\John\Programs" $args
    }
 
 3. Save, close, and restart PowerShell.
