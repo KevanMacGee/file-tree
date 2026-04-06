@@ -86,14 +86,47 @@ def build_tree_string(dir_path, prefix="", spec=None, root_dir=None, show_all=Fa
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="A git-aware directory tree generator.")
+    parser = argparse.ArgumentParser(
+        usage="gtree.py [-ng] [-a] [-nc] [-h] [path]",
+        description=(
+            "A git-aware directory tree generator.\n\n"
+            "With no flags, gtree hides OS-hidden files and .gitignore-excluded files."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        add_help=False,
+    )
     parser.add_argument("path", nargs="?", default=".", help="Target directory")
-    parser.add_argument("-a", "--all", dest="show_all", action="store_true",
-                        help="Show absolutely everything, including hidden and gitignore-excluded files")
-    parser.add_argument("-ng", "--no-gitignore", dest="no_gitignore", action="store_true",
-                        help="Ignore .gitignore rules (hidden files are still excluded)")
-    parser.add_argument("-nc", "--no-copy", dest="no_copy", action="store_true",
-                        help="Do not copy output to clipboard")
+
+    visibility_group = parser.add_argument_group("File visibility options")
+    visibility_group.add_argument(
+        "-ng",
+        "--no-gitignore",
+        dest="no_gitignore",
+        action="store_true",
+        help="Include files ignored by .gitignore, but still hides OS-hidden files",
+    )
+    visibility_group.add_argument(
+        "-a",
+        "--all",
+        dest="show_all",
+        action="store_true",
+        help="Include everything, including OS-hidden and .gitignore-excluded files",
+    )
+
+    general_group = parser.add_argument_group("General options")
+    general_group.add_argument(
+        "-nc",
+        "--no-copy",
+        dest="no_copy",
+        action="store_true",
+        help="Do not copy output to the clipboard",
+    )
+    general_group.add_argument(
+        "-h",
+        "--help",
+        action="help",
+        help="Show this help message and exit",
+    )
 
     args = parser.parse_args()
 
