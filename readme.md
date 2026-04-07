@@ -9,9 +9,11 @@ A lightweight, Python-based terminal utility that generates a visual directory t
 - **Auto-Copy:** Automatically copies the generated tree to your clipboard for easy pasting into docs or LLM prompts.
 - **Empty Directory Suppression:** Directories with no visible children are omitted entirely from the output.
 
-## Prerequisites
+## Getting Started
 
-You will need the `pathspec` and `pyperclip` libraries installed:
+Download gtree.py from the releases page [here](https://github.com/KevanMacGee/file-tree/releases/download/1.0.0/gtree.py).
+
+You will need the `pathspec` and `pyperclip` libraries installed before you use the tool:
 
 ```
 pip install pathspec pyperclip
@@ -19,7 +21,7 @@ pip install pathspec pyperclip
 
 ## Usage
 
-The simplest way to use this is to set up up global usage. (See instructions below) Then just open a terminal in the folder you want to view and run `gtree`.
+The simplest way to use this is to set up global usage. (See instructions below) Then just open a terminal in the folder you want to view and run `gtree`.
 
 ```
 PS C:\Users\John\g-tree> gtree
@@ -32,7 +34,7 @@ C:\Users\John\g-tree
 
 ### Occasional usage
 
-If you only plan to use `gtree.py` occasionally, you can run it like a normal Python command-line script. If you plan to use it often, see the global access section below.
+If you only plan to use `gtree.py` occasionally, you can run it like a normal Python command-line script. If you plan to use it this way, you'll need some extra commands as listed below.
 
 In the examples below, pretend the script is stored here:
 
@@ -62,7 +64,7 @@ To run `gtree` from any folder without typing the full path, add it to your Powe
 
    ```powershell
    function gtree {
-       python "C:\Users\John\Programs" $args
+       python "C:\Users\John\Programs\gtree.py" $args
    }
    ```
 
@@ -87,10 +89,8 @@ If you know what you are doing and don't need help setting it up, here are the f
 
 In other words...
 
-| Command                             | `.gitignore` respected | OS-hidden files respected |
-| ----------------------------------- | ---------------------- | ------------------------- |
-| `gtree`                             | Yes                    | Yes                       |
-| `gtree -ng` `gtree- --no-gitignore` | No                     | Yes                       |
-| `gtree -a` `gtree -all`             | No                     | No                        |
-
-4. 
+| Command                            | `.gitignore` respected | OS-hidden files respected |
+| ---------------------------------- | ---------------------- | ------------------------- |
+| `gtree`                            | Yes                    | Yes                       |
+| `gtree -ng` `gtree --no-gitignore` | No                     | Yes                       |
+| `gtree -a` `gtree --all`           | No                     | No                        |
