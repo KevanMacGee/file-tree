@@ -2,6 +2,9 @@
 
 A lightweight, Python-based terminal utility that generates a visual directory tree while respecting `.gitignore` rules and OS-level hidden file conventions. It also gives you the choice to not respect those conventions.
 
+
+When you run the command, it prints the directory in the terminal window and also copies it to your clipboard.
+
 ## Features
 
 - **Git-Aware:** Automatically detects and parses your `.gitignore` file, hiding matched entries by default.
@@ -61,7 +64,7 @@ To run `gtree` from any folder without typing the full path, add it to your Powe
 1. Using your PowerShell terminal, open your profile in Notepad by typing this in your terminal: `notepad $PROFILE`
 
 2. In the notepad text file that just opened, add a function that points to wherever you saved `gtree.py`:
-
+   
    ```powershell
    function gtree {
        python "C:\Users\John\Programs\gtree.py" $args
@@ -74,20 +77,18 @@ To run `gtree` from any folder without typing the full path, add it to your Powe
 
 ## Command Line Flags
 
-If you know what you are doing and don't need help setting it up, here are the flags.
 
-| **Flag**                | **Description**                                                                            |
-| ----------------------- | ------------------------------------------------------------------------------------------ |
-| [No flag]               | Shows the folder contents, but respects .gitignore file and doesn't print OS-hidden files. |
-| `-ng`, `--no-gitignore` | Bypass `.gitignore` rules, but OS-hidden files are not printed.                            |
-| `-a`, `--all`           | Shows everything: OS-hidden files and `.gitignore`-excluded entries.                       |
-| **Special Flags**       |                                                                                            |
-| `-nc`, `--no-copy`      | Does not copy the output to the clipboard, just displays in the terminal                   |
-| `-h`, `--help`          | Shows the help menu with all available options.                                            |
 
-### Usage Summary
+| **Flag**                | **Description**                                                                              |
+| ----------------------- | -------------------------------------------------------------------------------------------- |
+| [No flag]               | Shows the folder contents, but respects `.gitignore` file and doesn't print OS-hidden files. |
+| `-ng`, `--no-gitignore` | Bypass `.gitignore` rules, but OS-hidden files are not printed.                              |
+| `-a`, `--all`           | Shows everything: OS-hidden files and `.gitignore`-excluded entries.                         |
+| **Special Flags**       |                                                                                              |
+| `-nc`, `--no-copy`      | Does not copy the output to the clipboard, just displays in the terminal                     |
+| `-h`, `--help`          | Shows the help menu with all available options.                                              |
 
-In other words...
+### In other words...
 
 | Command                            | `.gitignore` respected | OS-hidden files respected |
 | ---------------------------------- | ---------------------- | ------------------------- |
