@@ -78,7 +78,6 @@ To run `gtree` from any folder without typing the full path, add it to your Powe
 ## Command Line Flags
 
 
-
 | **Flag**                | **Description**                                                                              |
 | ----------------------- | -------------------------------------------------------------------------------------------- |
 | [No flag]               | Shows the folder contents, but respects `.gitignore` file and doesn't print OS-hidden files. |
