@@ -78,14 +78,40 @@ To run `gtree` from any folder without typing the full path, add it to your Powe
 ## Command Line Flags
 
 
-| **Flag**                | **Description**                                                                              |
-| ----------------------- | -------------------------------------------------------------------------------------------- |
-| [No flag]               | Shows the folder contents, but respects `.gitignore` file and doesn't print OS-hidden files. |
-| `-ng`,&nbsp;`--no-gitignore` | Bypass `.gitignore` rules, but OS-hidden files are not printed.                              |
-| `-a`, `--all`           | Shows everything: OS-hidden files and `.gitignore`-excluded entries.                         |
-| **Special Flags**       |                                                                                              |
-| `-nc`, `--no-copy`      | Does not copy the output to the clipboard, just displays in the terminal                     |
-| `-h`, `--help`          | Shows the help menu with all available options.                                              |
+<table>
+  <thead>
+    <tr>
+      <th width="220" nowrap="nowrap">Flag</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td nowrap="nowrap">[No flag]</td>
+      <td>Shows the folder contents, but respects <code>.gitignore</code> file and doesn't print OS-hidden files.</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"><code>-ng</code>, <code>--no-gitignore</code></td>
+      <td>Bypass <code>.gitignore</code> rules, but OS-hidden files are not printed.</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"><code>-a</code>, <code>--all</code></td>
+      <td>Shows everything: OS-hidden files and <code>.gitignore</code>-excluded entries.</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"><strong>Special Flags</strong></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"><code>-nc</code>, <code>--no-copy</code></td>
+      <td>Does not copy the output to the clipboard, just displays in the terminal</td>
+    </tr>
+    <tr>
+      <td nowrap="nowrap"><code>-h</code>, <code>--help</code></td>
+      <td>Shows the help menu with all available options.</td>
+    </tr>
+  </tbody>
+</table>
 
 ### In other words...
 
