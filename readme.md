@@ -81,7 +81,7 @@ To run `gtree` from any folder without typing the full path, add it to your Powe
 | **Flag**                | **Description**                                                                              |
 | ----------------------- | -------------------------------------------------------------------------------------------- |
 | [No flag]               | Shows the folder contents, but respects `.gitignore` file and doesn't print OS-hidden files. |
-| `-ng`, `--no-gitignore` | Bypass `.gitignore` rules, but OS-hidden files are not printed.                              |
+| `-ng`,&nbsp;`--no-gitignore` | Bypass `.gitignore` rules, but OS-hidden files are not printed.                              |
 | `-a`, `--all`           | Shows everything: OS-hidden files and `.gitignore`-excluded entries.                         |
 | **Special Flags**       |                                                                                              |
 | `-nc`, `--no-copy`      | Does not copy the output to the clipboard, just displays in the terminal                     |
