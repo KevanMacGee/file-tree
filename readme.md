@@ -1,5 +1,7 @@
 # A git-aware file directory tool
 
+![gtree command output and help text in PowerShell](assets/Screenshot%202026-11-04%20150013.png)
+
 A lightweight, Python-based terminal utility that generates a visual directory tree while respecting `.gitignore` rules and OS-level hidden file conventions. It also gives you the choice to not respect those conventions.
 
 
